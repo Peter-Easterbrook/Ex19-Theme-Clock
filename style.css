@@ -59,9 +59,12 @@ body {
 }
 
 .clock {
+  height: 300px;
+  width: 300px;
+  border-radius: 50%;
+  border: solid 2px rgb(255, 187, 36);
   position: relative;
-  width: 200px;
-  height: 200px;
+  margin-bottom: 3rem;
 }
 
 .needle {
