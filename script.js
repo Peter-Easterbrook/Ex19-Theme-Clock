@@ -1,9 +1,32 @@
-const hourEl = document.querySelector('.hour');
-const minuteEl = document.querySelector('.minute');
-const secondEl = document.querySelector('.second');
+const HOURHAND = document.querySelector('#hours-hand');
+const MINUTEHAND = document.querySelector('#minutes-hand');
+const SECONDHAND = document.querySelector('#seconds-hand');
+
+const now = new Date();
+console.log(now);
+let hr = now.getHours();
+let min = now.getMinutes();
+let sec = now.getSeconds();
+console.log('Hour: ' + hr + ' Minute: ' + min + ' Second: ' + sec);
+
+let hrPosition = (hr * 360) / 12 + (min * (360 / 60)) / 12;
+let minPosition = (min * 360) / 60 + (sec * (360 / 60)) / 60;
+let secPosition = (sec * 360) / 60;
+
+function runTheClock() {
+  hrPosition = hrPosition + 3 / 360;
+  minPosition = minPosition + 6 / 60;
+  secPosition = secPosition + 6;
+
+  HOURHAND.style.transform = 'rotate(' + hrPosition + 'deg)';
+  MINUTEHAND.style.transform = 'rotate(' + minPosition + 'deg)';
+  SECONDHAND.style.transform = 'rotate(' + secPosition + 'deg)';
+}
+
+setInterval(runTheClock, 1000);
+
 const timeEl = document.querySelector('.time');
 const dateEl = document.querySelector('.date');
-const toggle = document.querySelector('.toggle');
 
 const days = [
   'Sunday',
@@ -29,6 +52,24 @@ const months = [
   'Dec',
 ];
 
+const time = new Date();
+const month = time.getMonth();
+const day = time.getDay();
+const date = time.getDate();
+const hours = time.getHours();
+const hoursForClock = hours >= 13 ? hours % 12 : hours;
+const minutes = time.getMinutes();
+const seconds = time.getSeconds();
+const ampm = hours >= 12 ? 'PM' : 'AM';
+const year = time.getFullYear();
+
+timeEl.innerHTML = `${hoursForClock}:${
+  minutes < 10 ? `0${minutes}` : minutes
+} ${ampm}`;
+dateEl.innerHTML = `${days[day]}, ${months[month]} <span class="circle">${date}</span>${year}`;
+
+// StackOverflow https://stackoverflow.com/questions/10756313/javascript-jquery-map-a-range-of-numbers-to-another-range-of-numbers
+const toggle = document.querySelector('.toggle');
 toggle.addEventListener('click', (e) => {
   const html = document.querySelector('html');
   if (html.classList.contains('dark')) {
@@ -39,52 +80,3 @@ toggle.addEventListener('click', (e) => {
     e.target.innerHTML = 'Light mode';
   }
 });
-
-function setTime() {
-  const time = new Date();
-  const month = time.getMonth();
-  const day = time.getDay();
-  const date = time.getDate();
-  const hours = time.getHours();
-  const hoursForClock = hours >= 13 ? hours % 12 : hours;
-  const minutes = time.getMinutes();
-  const seconds = time.getSeconds();
-  const ampm = hours >= 12 ? 'PM' : 'AM';
-  const year = time.getFullYear();
-
-  hourEl.style.transform = `translate(-50%, -100%) rotate(${scale(
-    hoursForClock,
-    0,
-    12,
-    0,
-    360
-  )}deg)`;
-  minuteEl.style.transform = `translate(-50%, -100%) rotate(${scale(
-    minutes,
-    0,
-    60,
-    0,
-    360
-  )}deg)`;
-  secondEl.style.transform = `translate(-50%, -100%) rotate(${scale(
-    seconds,
-    0,
-    60,
-    0,
-    360
-  )}deg)`;
-
-  timeEl.innerHTML = `${hoursForClock}:${
-    minutes < 10 ? `0${minutes}` : minutes
-  } ${ampm}`;
-  dateEl.innerHTML = `${days[day]}, ${months[month]} <span class="circle">${date}</span>${year}`;
-}
-
-// StackOverflow https://stackoverflow.com/questions/10756313/javascript-jquery-map-a-range-of-numbers-to-another-range-of-numbers
-const scale = (num, in_min, in_max, out_min, out_max) => {
-  return ((num - in_min) * (out_max - out_min)) / (in_max - in_min) + out_min;
-};
-
-setTime();
-
-setInterval(setTime, 1000);

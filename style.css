@@ -59,52 +59,67 @@ body {
 }
 
 .clock {
-  height: 300px;
-  width: 300px;
+  height: 19rem;
+  width: 19rem;
   border-radius: 50%;
-  border: solid 2px rgb(255, 187, 36);
+  border: solid 3px rgb(255, 187, 36);
   position: relative;
-  margin-bottom: 3rem;
+  margin-bottom: 1rem;
+  filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.5));
+  box-shadow: inset 1px 1px 3px 0px rgba(0, 0, 0, 0.75);
 }
 
-.needle {
+.hours {
   background-color: var(--primary-color);
+}
+#hours-hand {
   position: absolute;
-  top: 50%;
-  left: 50%;
   height: 80px;
-  width: 3px;
-  transform-origin: bottom center;
-  transition: all 0.5s ease-in;
+  width: 4px;
+  right: 145px;
+  bottom: 147px;
+  border-radius: 16px;
+  filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.5));
+  transition: all 0.3s ease-out;
+  transform-origin: bottom;
 }
-
-.needle.hour {
-  transform: translate(-50%, -100%) rotate(0deg);
+.minutes {
+  background-color: var(--primary-color);
 }
-
-.needle.minute {
-  transform: translate(-50%, -100%) rotate(0deg);
-  height: 130px;
+#minutes-hand {
+  position: absolute;
+  height: 135px;
+  width: 2px;
+  right: 147px;
+  bottom: 147px;
+  border-radius: 3px;
+  filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.5));
+  transform-origin: bottom;
+  transition: all 0.3s ease-out;
 }
-
-.needle.second {
-  transform: translate(-50%, -100%) rotate(0deg);
-  height: 140px;
-  background-color: #e74c3c;
+#seconds-hand {
+  position: absolute;
+  height: 135px;
+  width: 2px;
+  background-color: #ff6600;
+  right: 147px;
+  bottom: 147px;
+  filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.5));
+  transform-origin: bottom;
+  transition: all 0.3s ease-out;
 }
-
-.center-point {
-  background-color: #e74c3c;
+#center {
+  background-color: #ff6600;
   width: 10px;
   height: 10px;
   position: absolute;
   top: 50%;
   left: 50%;
+  filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.5));
   transform: translate(-50%, -50%);
   border-radius: 50%;
 }
-
-.center-point::after {
+#center::after {
   content: '';
   background-color: var(--primary-color);
   width: 5px;
@@ -114,8 +129,8 @@ body {
   left: 50%;
   transform: translate(-50%, -50%);
   border-radius: 50%;
+  transition: all 0.3s ease-out;
 }
-
 .time {
   font-size: 60px;
 }
